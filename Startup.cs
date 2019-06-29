@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using testLoginet.Controllers;
+using testLoginet.Helpers;
 using testLoginet.Models;
 using testLoginet.Models.Interfaces;
 using testLoginet.Services;
@@ -51,6 +52,8 @@ namespace testLoginet
 
             // DI для сервиса пользователей
             services.AddSingleton<IUsersService, UsersService>();
+            // DI для шифрования email
+            services.AddSingleton<IEncryptor, AesEncryptor>();
 
             // Для отправки ответа в xml формате
             services.AddMvc(options =>
