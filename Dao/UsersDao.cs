@@ -19,18 +19,28 @@ namespace testLoginet.Models
             return GetStringResponse("users");
         }
 
+        public string GetUserById(long id)
+        {
+            return GetStringResponse("users/" + id);
+        }
+
         private string GetStringResponse(string path)
         {
             Task<HttpResponseMessage> response = _httpClient.GetAsync(path);
             response.Wait();
-            response.Result.EnsureSuccessStatusCode();
+
+            if (!response.Result.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
             Task<string> a = response.Result.Content.ReadAsStringAsync();
             a.Wait();
             //Console.WriteLine(a.Result);
             return a.Result;
         }
-           
-             
+
+
 
     }
 }

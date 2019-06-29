@@ -8,5 +8,7 @@ namespace testLoginet.Models.Interfaces
     public interface IUsersDao
     {
         string GetAllUsers();
+
+        string GetUserById(long id);
     }
 }

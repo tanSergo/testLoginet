@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 using testLoginet.Models;
 
 namespace testLoginet.Controllers
@@ -15,11 +17,31 @@ namespace testLoginet.Controllers
             _usersService = usersService;
         }
 
-        // GET api/values
+        // GET api/users
         [HttpGet]
-        public User[] GET()
+        public IEnumerable<User> Get()
         {
+            User[] users = _usersService.getAllUsers();
+
+            if (users == null)
+                return Enumerable.Empty<User>();
+
             return _usersService.getAllUsers();
+        }
+
+        // GET api/users/{id}
+        [HttpGet("{id}")]
+        public ActionResult<User> Get(long id)
+        {
+            if (id < 0)
+                return BadRequest();
+
+            User user = _usersService.getUserById(id);
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
         }
     }
 }

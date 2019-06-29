@@ -19,6 +19,12 @@ namespace testLoginet.Services
 
         public User[] getAllUsers()
         {
+            string usersJson = _userDao.GetAllUsers();
+
+            if (usersJson == null)
+            {
+                return null;
+            }
 
             User[] users = JsonConvert.DeserializeObject<User[]>(_userDao.GetAllUsers());
             foreach (User u in users)
@@ -26,6 +32,18 @@ namespace testLoginet.Services
                 u.Email = _encryptor.EncryptString(u.Email);
             }
             return users;            
+        }
+
+        public User getUserById(long id)
+        {
+            string userJson = _userDao.GetUserById(id);
+
+            if (userJson == null)
+                return null;
+
+            User user = JsonConvert.DeserializeObject<User>(userJson);
+            user.Email = _encryptor.EncryptString(user.Email);
+            return user;
         }
     }
 }
