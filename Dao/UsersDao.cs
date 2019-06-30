@@ -24,6 +24,13 @@ namespace testLoginet.Models
             return GetStringResponse("users/" + id);
         }
 
+        public string getAlbumsByUserId(long id)
+        {
+            return GetStringResponse("users/" + id + "/albums");
+//            return GetStringResponse("albums?userId=" + id);
+        }
+
+
         private string GetStringResponse(string path)
         {
             Task<HttpResponseMessage> response = _httpClient.GetAsync(path);

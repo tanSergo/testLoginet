@@ -20,7 +20,8 @@ namespace testLoginet.Controllers
             _albumsService = albumsService;
         }
 
-        // GET api/users
+        // Получение списка всех альбомов
+        // GET api/albums
         [HttpGet]
         public IEnumerable<Album> Get()
         {
@@ -32,7 +33,8 @@ namespace testLoginet.Controllers
             return albums;
         }
 
-        // GET api/users/{id}
+        // Получение альбома по id
+        // GET api/albums/{id}
         [HttpGet("{id}")]
         public ActionResult<Album> Get(long id)
         {

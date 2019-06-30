@@ -7,5 +7,7 @@ namespace testLoginet.Controllers
         User[] getAllUsers();
 
         User getUserById(long id);
+
+        Album[] getAlbumsByUserId(long id);
     }
 }

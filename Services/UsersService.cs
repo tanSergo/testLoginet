@@ -45,5 +45,15 @@ namespace testLoginet.Services
             user.Email = _encryptor.EncryptString(user.Email);
             return user;
         }
+
+        public Album[] getAlbumsByUserId(long id)
+        {
+            string userAlbumsJson = _usersDao.getAlbumsByUserId(id);
+            if (userAlbumsJson == null)
+                return null;
+
+            return JsonConvert.DeserializeObject<Album[]>(userAlbumsJson);
+
+        }
     }
 }

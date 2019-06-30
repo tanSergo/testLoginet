@@ -10,5 +10,7 @@ namespace testLoginet.Models.Interfaces
         string GetAllUsers();
 
         string GetUserById(long id);
+
+        string getAlbumsByUserId(long id);
     }
 }

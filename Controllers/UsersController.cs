@@ -17,6 +17,7 @@ namespace testLoginet.Controllers
             _usersService = usersService;
         }
 
+        // Получение списка все пользователей
         // GET api/users
         [HttpGet]
         public IEnumerable<User> Get()
@@ -29,6 +30,7 @@ namespace testLoginet.Controllers
             return users;
         }
 
+        // Получение пользователя по id
         // GET api/users/{id}
         [HttpGet("{id}")]
         public ActionResult<User> Get(long id)
@@ -42,6 +44,18 @@ namespace testLoginet.Controllers
                 return NotFound();
 
             return Ok(user);
+        }
+
+        // Получение всех альбомов одного пользователя
+        // GET api/users/{id}/albums
+        [HttpGet("{id}/albums")]
+        public IEnumerable<Album> GetUsersAlbums(long id)
+        {
+            Album[] userAlbums = _usersService.getAlbumsByUserId(id);
+            if (userAlbums == null)
+                return Enumerable.Empty<Album>();
+
+            return userAlbums;
         }
     }
 }
