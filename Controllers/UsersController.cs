@@ -26,7 +26,7 @@ namespace testLoginet.Controllers
             if (users == null)
                 return Enumerable.Empty<User>();
 
-            return _usersService.getAllUsers();
+            return users;
         }
 
         // GET api/users/{id}

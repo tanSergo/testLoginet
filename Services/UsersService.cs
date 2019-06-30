@@ -8,25 +8,25 @@ namespace testLoginet.Services
 {
     public class UsersService : IUsersService
     {
-        private readonly IUsersDao _userDao;
+        private readonly IUsersDao _usersDao;
         private readonly IEncryptor _encryptor;
 
         public UsersService(IUsersDao usersDao, IEncryptor encryptor)
         {
-            _userDao = usersDao;
+            _usersDao = usersDao;
             _encryptor = encryptor;
         }
 
         public User[] getAllUsers()
         {
-            string usersJson = _userDao.GetAllUsers();
+            string usersJson = _usersDao.GetAllUsers();
 
             if (usersJson == null)
             {
                 return null;
             }
 
-            User[] users = JsonConvert.DeserializeObject<User[]>(_userDao.GetAllUsers());
+            User[] users = JsonConvert.DeserializeObject<User[]>(usersJson);
             foreach (User u in users)
             {
                 u.Email = _encryptor.EncryptString(u.Email);
@@ -36,7 +36,7 @@ namespace testLoginet.Services
 
         public User getUserById(long id)
         {
-            string userJson = _userDao.GetUserById(id);
+            string userJson = _usersDao.GetUserById(id);
 
             if (userJson == null)
                 return null;
