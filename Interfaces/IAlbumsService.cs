@@ -8,8 +8,10 @@ namespace testLoginet.Interfaces
 {
     public interface IAlbumsService
     {
-        Album[] getAllAlbums();
+        //Task<Album[]> getAllAlbumsAsync();
 
-        Album getAlbumById(long id);
+        Task<Album> getAlbumByIdAsync(long id);
+
+        Task<Album[]> getAllAlbumsAsync();
     }
 }

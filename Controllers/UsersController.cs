@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using testLoginet.Models;
 
 namespace testLoginet.Controllers
@@ -20,9 +21,9 @@ namespace testLoginet.Controllers
         // Получение списка все пользователей
         // GET api/users
         [HttpGet]
-        public IEnumerable<User> Get()
+        public async Task<IEnumerable<User>> GetAsync()
         {
-            User[] users = _usersService.getAllUsers();
+            User[] users = await _usersService.getAllUsersAsync();
 
             if (users == null)
                 return Enumerable.Empty<User>();
@@ -33,12 +34,12 @@ namespace testLoginet.Controllers
         // Получение пользователя по id
         // GET api/users/{id}
         [HttpGet("{id}")]
-        public ActionResult<User> Get(long id)
+        public async Task<ActionResult<User>> GetAsync(long id)
         {
             if (id < 0)
                 return BadRequest();
 
-            User user = _usersService.getUserById(id);
+            User user = await _usersService.getUserByIdAsync(id);
 
             if (user == null)
                 return NotFound();
@@ -49,9 +50,9 @@ namespace testLoginet.Controllers
         // Получение всех альбомов одного пользователя
         // GET api/users/{id}/albums
         [HttpGet("{id}/albums")]
-        public IEnumerable<Album> GetUsersAlbums(long id)
+        public async Task<IEnumerable<Album>> GetUsersAlbumsAsync(long id)
         {
-            Album[] userAlbums = _usersService.getAlbumsByUserId(id);
+            Album[] userAlbums = await _usersService.getAlbumsByUserIdAsync(id);
             if (userAlbums == null)
                 return Enumerable.Empty<Album>();
 

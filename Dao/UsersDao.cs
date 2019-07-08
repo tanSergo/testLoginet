@@ -6,48 +6,31 @@ namespace testLoginet.Models
 {
     public class UsersDao : IUsersDao
     {
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _clientFactory;
 
 
-        public UsersDao(HttpClient httpClient)
+        public UsersDao(IHttpClientFactory clientFactory)
         {
-            _httpClient = httpClient;
+            _clientFactory = clientFactory;
         }
 
-        public string GetAllUsers()
+        public Task<string> GetAllUsersAsync()
         {
-            return GetStringResponse("users");
+            var client = _clientFactory.CreateClient("httpClient");
+            return client.GetStringAsync("users");
         }
 
-        public string GetUserById(long id)
+        public Task<string> GetUserByIdAsync(long id)
         {
-            return GetStringResponse("users/" + id);
+            var client = _clientFactory.CreateClient("httpClient");
+            return client.GetStringAsync("users/" + id);
         }
 
-        public string getAlbumsByUserId(long id)
+        public Task<string> getAlbumsByUserIdAsync(long id)
         {
-            return GetStringResponse("users/" + id + "/albums");
-//            return GetStringResponse("albums?userId=" + id);
+            var client = _clientFactory.CreateClient("httpClient");
+            return client.GetStringAsync("users/" + id + "/albums");
         }
-
-
-        private string GetStringResponse(string path)
-        {
-            Task<HttpResponseMessage> response = _httpClient.GetAsync(path);
-            response.Wait();
-
-            if (!response.Result.IsSuccessStatusCode)
-            {
-                return null;
-            }
-
-            Task<string> a = response.Result.Content.ReadAsStringAsync();
-            a.Wait();
-            //Console.WriteLine(a.Result);
-            return a.Result;
-        }
-
-
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Threading.Tasks;
 using testLoginet.Controllers;
 using testLoginet.Helpers;
 using testLoginet.Models;
@@ -17,9 +18,9 @@ namespace testLoginet.Services
             _encryptor = encryptor;
         }
 
-        public User[] getAllUsers()
+        public async Task<User[]> getAllUsersAsync()
         {
-            string usersJson = _usersDao.GetAllUsers();
+            string usersJson = await _usersDao.GetAllUsersAsync();
 
             if (usersJson == null)
             {
@@ -34,9 +35,9 @@ namespace testLoginet.Services
             return users;            
         }
 
-        public User getUserById(long id)
+        public async Task<User> getUserByIdAsync(long id)
         {
-            string userJson = _usersDao.GetUserById(id);
+            string userJson = await _usersDao.GetUserByIdAsync(id);
 
             if (userJson == null)
                 return null;
@@ -46,9 +47,9 @@ namespace testLoginet.Services
             return user;
         }
 
-        public Album[] getAlbumsByUserId(long id)
+        public async Task<Album[]> getAlbumsByUserIdAsync(long id)
         {
-            string userAlbumsJson = _usersDao.getAlbumsByUserId(id);
+            string userAlbumsJson = await _usersDao.getAlbumsByUserIdAsync(id);
             if (userAlbumsJson == null)
                 return null;
 

@@ -23,9 +23,9 @@ namespace testLoginet.Controllers
         // Получение списка всех альбомов
         // GET api/albums
         [HttpGet]
-        public IEnumerable<Album> Get()
+        public async Task<IEnumerable<Album>> GetAsync()
         {
-            Album[] albums = _albumsService.getAllAlbums();
+            IEnumerable<Album> albums = await _albumsService.getAllAlbumsAsync();
 
             if (albums == null)
                 return Enumerable.Empty<Album>();
@@ -36,12 +36,12 @@ namespace testLoginet.Controllers
         // Получение альбома по id
         // GET api/albums/{id}
         [HttpGet("{id}")]
-        public ActionResult<Album> Get(long id)
+        public async Task<ActionResult<Album>> GetAsync(long id)
         {
             if (id < 0)
                 return BadRequest();
 
-            Album album = _albumsService.getAlbumById(id);
+            Album album = await _albumsService.getAlbumByIdAsync(id);
 
             if (album == null)
                 return NotFound();

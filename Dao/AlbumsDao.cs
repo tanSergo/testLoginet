@@ -9,38 +9,24 @@ namespace testLoginet.Dao
 {
     public class AlbumsDao : IAlbumsDao
     {
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _clientFactory;
 
-        public AlbumsDao(HttpClient httpClient)
+        public AlbumsDao(IHttpClientFactory clientFactory)
         {
-            _httpClient = httpClient;
+            _clientFactory = clientFactory;
         }
 
-        public string GetAlbumById(long id)
+        public Task<string> GetAlbumByIdAsync(long id)
         {
-            return GetStringResponse("albums/" + id);
+            var client = _clientFactory.CreateClient("httpClient");
+            return client.GetStringAsync("albums/" + id);
         }
 
-        public string GetAllAlbums()
+        public Task<string> GetAllAlbumsAsync()
         {
-            return GetStringResponse("albums");
+            var client = _clientFactory.CreateClient("httpClient");
+            return client.GetStringAsync("albums");
         }
 
-
-        private string GetStringResponse(string path)
-        {
-            Task<HttpResponseMessage> response = _httpClient.GetAsync(path);
-            response.Wait();
-
-            if (!response.Result.IsSuccessStatusCode)
-            {
-                return null;
-            }
-
-            Task<string> a = response.Result.Content.ReadAsStringAsync();
-            a.Wait();
-            //Console.WriteLine(a.Result);
-            return a.Result;
-        }
     }
 }

@@ -7,8 +7,8 @@ namespace testLoginet.Interfaces
 {
     public interface IAlbumsDao
     {
-        string GetAllAlbums();
+        Task<string> GetAllAlbumsAsync();
 
-        string GetAlbumById(long id);
+        Task<string> GetAlbumByIdAsync(long id);
     }
 }

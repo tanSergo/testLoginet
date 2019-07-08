@@ -7,10 +7,10 @@ namespace testLoginet.Models.Interfaces
 {
     public interface IUsersDao
     {
-        string GetAllUsers();
+        Task<string> GetAllUsersAsync();
 
-        string GetUserById(long id);
+        Task<string> GetUserByIdAsync(long id);
 
-        string getAlbumsByUserId(long id);
+        Task<string> getAlbumsByUserIdAsync(long id);
     }
 }

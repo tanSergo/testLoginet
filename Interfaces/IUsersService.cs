@@ -1,13 +1,14 @@
-﻿using testLoginet.Models;
+﻿using System.Threading.Tasks;
+using testLoginet.Models;
 
 namespace testLoginet.Controllers
 {
     public interface IUsersService
     {
-        User[] getAllUsers();
+        Task<User[]> getAllUsersAsync();
 
-        User getUserById(long id);
+        Task<User> getUserByIdAsync(long id);
 
-        Album[] getAlbumsByUserId(long id);
+        Task<Album[]> getAlbumsByUserIdAsync(long id);
     }
 }

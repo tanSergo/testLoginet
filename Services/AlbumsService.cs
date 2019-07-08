@@ -17,9 +17,9 @@ namespace testLoginet.Services
             _albumsDao = albumsDao;
         }
 
-        public Album getAlbumById(long id)
+        public async Task<Album> getAlbumByIdAsync(long id)
         {
-            string albumJson = _albumsDao.GetAlbumById(id);
+            string albumJson = await _albumsDao.GetAlbumByIdAsync(id);
 
             if (albumJson == null)
                 return null;
@@ -27,9 +27,9 @@ namespace testLoginet.Services
             return JsonConvert.DeserializeObject<Album>(albumJson);
         }
 
-        public Album[] getAllAlbums()
+        public async Task<Album[]> getAllAlbumsAsync()
         {
-            string albumsJson = _albumsDao.GetAllAlbums();
+            string albumsJson = await _albumsDao.GetAllAlbumsAsync();
 
             if (albumsJson == null)
             {
