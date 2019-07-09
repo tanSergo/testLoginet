@@ -14,6 +14,7 @@ using testLoginet.Helpers;
 using testLoginet.Interfaces;
 using testLoginet.Models;
 using testLoginet.Models.Interfaces;
+using testLoginet.Options;
 using testLoginet.Services;
 
 namespace testLoginet
@@ -30,15 +31,16 @@ namespace testLoginet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Настройки httpClient
+            var httpClientConfig = Configuration.GetSection("HttpClientOptions").Get<HttpClientOptions>();
+            
             // Добавляем и настраиваем httpClient для получения json данных в dao
             services.AddHttpClient("httpClient", c =>
             {
-                c.BaseAddress = new Uri("http://jsonplaceholder.typicode.com/");
-                c.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                c.DefaultRequestHeaders.AcceptEncoding.TryParseAdd("gzip");
-                c.DefaultRequestHeaders.AcceptEncoding.TryParseAdd("deflate");
-                c.DefaultRequestHeaders.AcceptEncoding.TryParseAdd("br");
-                c.DefaultRequestHeaders.Connection.TryParseAdd("keep-alive");
+                c.BaseAddress = httpClientConfig.BaseAddress;
+                c.DefaultRequestHeaders.Accept.TryParseAdd(httpClientConfig.Accept);
+                c.DefaultRequestHeaders.AcceptEncoding.TryParseAdd( httpClientConfig.AcceptEncoding);
+                c.DefaultRequestHeaders.Connection.TryParseAdd(httpClientConfig.Connection);
                 c.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue
                 {
                     NoCache = true,
